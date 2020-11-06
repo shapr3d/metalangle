@@ -319,6 +319,15 @@ angle::Result FramebufferMtl::blit(const gl::Context *context,
     gl::Rectangle sourceArea = sourceAreaIn;
     gl::Rectangle destArea   = destAreaIn;
 
+    // Update backbuffer dimensions
+    SurfaceMtl *backbuffer = mBackbuffer ? mBackbuffer : srcFrameBuffer->mBackbuffer;
+    if (backbuffer)
+    {
+        // Backbuffer might obtain new drawable, which means
+        // it might change the native texture dimensions.
+        ANGLE_TRY(backbuffer->ensureCurrentDrawableObtained(context));
+    }
+
     const gl::Rectangle srcFramebufferDimensions = srcFrameBuffer->getCompleteRenderArea();
 
     // If the destination is flipped in either direction, we will flip the source instead so that
