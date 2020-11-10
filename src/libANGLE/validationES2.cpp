@@ -7383,11 +7383,13 @@ bool ValidateFramebufferTexture2DMultisampleEXT(Context *context,
         return false;
     }
 
+#if !defined(ANGLE_ENABLE_METAL)
     if (attachment != GL_COLOR_ATTACHMENT0)
     {
         context->validationError(GL_INVALID_ENUM, kInvalidAttachment);
         return false;
     }
+#endif
 
     TextureTarget textargetPacked = FromGLenum<TextureTarget>(textarget);
     if (!ValidTexture2DDestinationTarget(context, textargetPacked))
