@@ -739,7 +739,8 @@ void FramebufferMtl::initLoadStoreActionOnRenderPassFirstStart(
     mtl::RenderPassAttachmentDesc &attachment = *attachmentOut;
 
     if (attachment.storeAction == MTLStoreActionDontCare ||
-        attachment.storeAction == MTLStoreActionMultisampleResolve)
+        attachment.storeAction == MTLStoreActionMultisampleResolve ||
+        (mBackbuffer && !mBackbuffer->preserveBuffer()))
     {
         // If we previously discarded attachment's content, then don't need to load it.
         attachment.loadAction = MTLLoadActionDontCare;
