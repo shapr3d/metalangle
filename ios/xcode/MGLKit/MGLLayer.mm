@@ -7,6 +7,7 @@
 #import "MGLLayer+Private.h"
 
 #include <vector>
+#include <algorithm>
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
@@ -682,8 +683,8 @@ GLint LinkProgram(GLuint program)
         // Resize the metal layer
         _metalLayer.frame = self.bounds;
         _metalLayer.drawableSize =
-            CGSizeMake(_metalLayer.bounds.size.width * _metalLayer.contentsScale,
-                       _metalLayer.bounds.size.height * _metalLayer.contentsScale);
+        CGSizeMake(std::max(1.0, _metalLayer.bounds.size.width * _metalLayer.contentsScale),
+                   std::max(1.0, _metalLayer.bounds.size.height * _metalLayer.contentsScale));
     }
     else
     {
